@@ -6,10 +6,10 @@ Remove = []  # from orginial file (WELE file, answer)
 Insert = []  # from compared file (Member's file)
 
 #
-esl = [10087, 10086, 10085, 10084, 10083]
+esl = [10004]
 
 for esl_index in esl:
-    member_name = 'Ho Duc Nhan'
+    member_name = 'HoangLoc'
     orginial_file_name = 'FileTest/ESL' + ' ' + str(esl_index) + ' ' + 'WELE'
     compared_file_name = 'FileTest/ESL' + \
         ' ' + str(esl_index) + ' ' + member_name

@@ -77,10 +77,17 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
         print('|| ' + 'Remove     '.rjust(30) +
               ' || ' + '     Insert'.ljust(30) + ' ||')
         print('=' * 70)
+        # create out put file
+        f= open('FileTest/result_file.csv','w+')
+        f.write('Remove' + ',' + 'Insert' +'\n')
         for it in range(len(Remove)):
             print('|| ' + Remove[it].rjust(30) +
                   ' || ' + Insert[it].ljust(30) + ' ||')
+            #add new line
+            f.write(Remove[it] + ',' +Insert[it] +'\n')
         print('=' * 70)
+        # finish writing file
+        f.close()
         print()
         print()
     PRINT()
