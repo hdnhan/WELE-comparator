@@ -8,40 +8,43 @@ Remove = []  # from orginial file (WELE file, answer)
 Insert = []  # from compared file (Member's file)
 
 
-def Standardize_File_Docx(file_docx_name):
+def Standardize_File_Docx(file_docx_name, no_space, one_space, special_word):
     file = open(file_docx_name + '.docx', 'rb')
     content = docx.Document(file)
     standard_content = ''
+
     for para in content.paragraphs:
         standard_content += para.text + ' '
-    standard_content = standard_content\
-        .replace("'", '').replace('"', '')\
-        .replace("‘", '').replace("’", '')\
-        .replace('“', '').replace('”', '')\
-        .replace('(', '').replace(')', '')\
-        .replace(':', '')\
-        .replace('.', '')\
-        .replace('_', '')\
-        .replace(',', '')\
-        .replace('!', '')\
-        .replace('?', '')\
-        .replace('-', ' ')\
-        .replace('–', ' ')\
-        .replace('  ', ' ').replace('  ', ' ')\
-        .replace('  ', ' ').replace('  ', ' ')\
-        .replace('…', '')\
-        .lower()
-    return standard_content
+
+    standard_content = standard_content.lower()
+
+    for elem in no_space.split():
+        standard_content = standard_content.replace(elem, '')
+
+    one_space = one_space.split() + ['    ', '   ', '  ']
+    for elem in one_space:
+        standard_content = standard_content.replace(elem, ' ')
+
+    for elem in special_word.split():
+        standard_content = standard_content.replace(elem, '')
+
+    return standard_content.replace('  ', ' ')
+
+no_space = "' " + '‘ ’ “ ” ( ) : ! ... .. . _ " … , ? '
+one_space = '- '
+special_word = 'uh ah oh'
 
 
-esl_index = 10084
+esl_index = 10083
 member_name = 'Ho Duc Nhan'
 orginial_file_name = 'ESL' + ' ' + str(esl_index) + ' ' + 'WELE'
 compared_file_name = 'ESL' + ' ' + str(esl_index) + ' ' + member_name
 
 
-orginial_content = unidecode.unidecode(Standardize_File_Docx(orginial_file_name))
-compared_content = unidecode.unidecode(Standardize_File_Docx(compared_file_name))
+orginial_content = unidecode.unidecode(
+    Standardize_File_Docx(orginial_file_name, no_space, one_space, special_word))
+compared_content = unidecode.unidecode(
+    Standardize_File_Docx(compared_file_name, no_space, one_space, special_word))
 
 ##################################################################
 
