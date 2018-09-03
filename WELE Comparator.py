@@ -5,13 +5,14 @@ import Detect_Mistakes_Each_File as dmef
 Remove = []  # from orginial file (WELE file, answer)
 Insert = []  # from compared file (Member's file)
 
+#
 esl = [10087, 10086, 10085, 10084, 10083]
 
-for esl_index in esl: 
+for esl_index in esl:
     member_name = 'Ho Duc Nhan'
-    orginial_file_name = 'ESL' + ' ' + str(esl_index) + ' ' + 'WELE'
-    compared_file_name = 'ESL' + ' ' + str(esl_index) + ' ' + member_name
-
+    orginial_file_name = 'FileTest/ESL' + ' ' + str(esl_index) + ' ' + 'WELE'
+    compared_file_name = 'FileTest/ESL' + \
+        ' ' + str(esl_index) + ' ' + member_name
 
     orginial_content = sfd.Standardize_File_Docx(orginial_file_name)
     compared_content = sfd.Standardize_File_Docx(compared_file_name)

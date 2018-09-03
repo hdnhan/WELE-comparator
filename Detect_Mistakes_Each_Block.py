@@ -23,7 +23,9 @@ def Detect_Mistakes_Each_Block(lines, lletter, rletter):
         line_next = lines[pos + 1]
 
         if res[2] == 1:
-            pos += 1  # jump to the line behind the next line
+            pos += 2  # jump to the line behind the next line
+        if res[2]==2:
+            pos += 1
         pos += 1
 
     Remove = []

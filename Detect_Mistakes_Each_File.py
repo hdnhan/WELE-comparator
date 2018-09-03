@@ -3,10 +3,6 @@ import Detect_Mistakes_Each_Block as dmeb
 import diff_match_patch as dmp_module
 dmp = dmp_module.diff_match_patch()
 
-# Desired results
-Remove = []  # from orginial file (WELE file, answer)
-Insert = []  # from compared file (Member's file)
-
 
 # pos: position
 # dire: direction
@@ -26,6 +22,10 @@ def Get_Letters(content, pos, dire):
 
 
 def Detect_Mistakes_Each_File(orginial_content, compared_content):
+    # Desired results
+    Remove = []  # from orginial file (WELE file, answer)
+    Insert = []  # from compared file (Member's file)
+
     patches = dmp.patch_make(orginial_content, compared_content)
 
     ###Start_Remove = []
@@ -72,13 +72,16 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
 
     #Remove = [word for pair in Remove for word in pair.split() if  word.islower()]
     #Insert = [word for pair in Insert for word in pair.split() if  word.islower()]
-
-    print('=' * 70)
-    print('|| ' + 'Remove     '.rjust(30) +
-          ' || ' + '     Insert'.ljust(30) + ' ||')
-    print('=' * 70)
-    for it in range(len(Remove)):
-        print('|| ' + Remove[it].rjust(30) +
-              ' || ' + Insert[it].ljust(30) + ' ||')
-    print('=' * 70)
+    def PRINT():
+        print('=' * 70)
+        print('|| ' + 'Remove     '.rjust(30) +
+              ' || ' + '     Insert'.ljust(30) + ' ||')
+        print('=' * 70)
+        for it in range(len(Remove)):
+            print('|| ' + Remove[it].rjust(30) +
+                  ' || ' + Insert[it].ljust(30) + ' ||')
+        print('=' * 70)
+        print()
+        print()
+    PRINT()
     return
