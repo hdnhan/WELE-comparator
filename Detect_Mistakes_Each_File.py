@@ -54,10 +54,10 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
 
         block = str(patches[cnt]).splitlines()
 
-        # print(block)
+        #print(block)
         block = sb.Standardize_Block(block)
         block = sb.Standardize_Block(block)
-        # print(block)
+        #print(block)
 
         res = []
         res = dmeb.Detect_Mistakes_Each_Block(block, lletter, rletter)

@@ -1,49 +1,64 @@
+# Try to get rid of all exceptions or noises
+# And get the standard form: [' abc', '+(-)abc', ('-(+)abc',) ' abc']
+# (): optional
+# Or to be precise:
+# case 1: [' abc', '+abc', '-abc', ' abc']
+# case 2: [' abc', '-abc', '+abc', ' abc']
+# case 3: [' abc', '+abc', ' abc']
+# case 4: [' abc', '-abc', ' abc']
+
+
 def Standardize_Block(block):
     x = 2
     while x < len(block) - 1:
-        li_p = block[x - 1]
-        li_c = block[x]
-        li_n = block[x + 1]
+        lp = block[x - 1]  # previous line
+        lc = block[x]     # current line
+        ln = block[x + 1]  # next line
 
-        # delete this (remove or insert only one space)
-        if li_c[0] != ' ' and len(li_c[1:].split()) == 0:
+        # delete this error (remove or insert only one space)
+        # eg. '- ' or '+ '
+        if lc[0] != ' ' and len(lc[1:].split()) == 0:
             block.pop(x)
             x -= 1
-        # standardize the block
-        # avoid a word seperating into two words
-        # (note: more than 2: not resolved yet!!!)
-        if(x + 2 < len(block) and li_p[0] != ' ' and li_p[0] == li_n[0] and li_c[0] == ' ' and block[x + 2][0] != ' '):
-            # print('ok===>>>3')
-            block[x - 1] += block[x][1:] + block[x + 1][1:]
-            block[x + 2] = block[x + 2][0] + \
-                block[x][1:] + block[x + 2][1:]
-            #print(block[x - 1])
-            #print(block[x + 2])
+
+        # two removing or inserting words in succession
+        # eg: ['-lo', '-ve'] => ['-love']
+        if lp[0] != ' ' and lc[0] != ' ' and lp[0] == lc[0]:
+            block[x - 1] += lc[1:]
             block.pop(x)
-            block.pop(x)
-            # print(block)
-            x -= 2
-        elif(li_p[0] != ' ' and li_c[0] != ' ' and li_n[0] != ' ' and li_p[-1] != ' '):
-            # print('ok===>>>1')
-            block[x - 1] += li_n[1:]
-            block.pop(x + 1)
-            # print(block)
-            x -= 2
-        elif(li_p[0] != ' ' and li_c[0] != ' ' and li_n[0] != ' ' and li_p[-1] == ' ' and x + 2 < len(block) and block[x + 2][1] == ' '):
-            block[x - 1] += ' ' + block[x + 1][1:]
-            block.pop(x + 1)
             x -= 1
-            # print('ok===>>>')
-            # print(block)
-        elif(li_p[0] != ' ' and li_c[1] != ' ' and li_n[0] != ' ' and len(li_c.split()) == 1):
-            # print('ok===>>>2')
-            # print(li_c[1:])
-            block[x - 1] += li_c[1:]
-            block[x + 1] = li_n[0] + li_c[1:] + li_n[1:]
-            #print(block[x - 1])
-            #print(block[x + 1])
+
+        # three removing or inserting words in succession
+        # eg: ['h', '-ear ', '+istor', '-stories', '+y']
+        #       => ['h', '-ear stories', '+istor', '+y']
+        if lp[0] != ' ' and lc[0] != ' ' and ln[0] != ' ' and \
+                lp[0] == ln[0] and any([lc[0] == '-', lc[0] == '+']):
+            block[x - 1] += ln[1:]
+            block.pop(x + 1)
+
+        # eg. ['-k', ' no', '-w'] => ['-know', '+no']
+        # another eg. ['-an ', ' advance', '-d']
+        #             => ['-an advanced', '+advance']
+        if lp[0] != ' ' and ln[0] != ' ' and lp[0] == ln[0] and \
+                lp[-1] != ' ' and lc[-1] != ' ' and \
+                lc[0] == ' ' and lc[1] != ' ' and len(lc.split()) == 1:
+            # print('ok ===>>> 1')
+            block[x - 1] += lc[1:] + ln[1:]
+            if lp[0] == '-':
+                block[x + 1] = '+' + lc[1:]
+            else:
+                block[x + 1] = '-' + lc[1:]
             block.pop(x)
-            # print(block)
+            x -= 1
+
+        # eg. ['-in', ' tens' '+ion', '-e'] => ['-intens', '+tension' '-e']
+        if lp[0] != ' ' and ln[0] != ' ' and lp[0] != ln[0] and \
+                lp[-1] != ' ' and lc[-1] != ' ' and \
+                lc[0] == ' ' and lc[1] != ' ' and len(lc.split()) == 1:
+            # print('ok ===>>> 1')
+            block[x - 1] += lc[1:]
+            block[x + 1] = ln[0] + lc[1:] + ln[1:]
+            block.pop(x)
             x -= 1
         x += 1
     return block

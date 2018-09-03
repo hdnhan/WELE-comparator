@@ -9,14 +9,14 @@ def Standardize_File_Docx(file_docx_name):
 
     # transfer the whole document (many paragraphs) to only one paragraph
     for para in content.paragraphs:
-        standard_content += para.text + ' '
-
+        standard_content += para.text + ' '       
+    
     # English and lower words
-    standard_content = unidecode.unidecode(standard_content.lower())
+    standard_content = unidecode.unidecode(standard_content.lower().replace('\n', ' '))
 
     # no_space: replace letters with no space
     # one_space: replace letter with one space
-    no_space = "' " + '‘ ’ “ ” ( ) : ! ... .. . _ " … , ? '
+    no_space = "' " + '‘ ’ “ ” ( ) : ! ... .. . _ " … , ? ; '
     one_space = '- '
     special_word = 'uh ah oh wow'
 
