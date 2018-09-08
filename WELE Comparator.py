@@ -10,8 +10,8 @@ Insert = []  # from compared file (Member's file)
 #esl = [10083]
 #member_name = 'Ho Duc Nhan'
 
-esl = [10004]
-member_name = 'Hoang Loc'
+esl = [10065]
+member_name = 'Nguyen Thi My Huyen'
 
 for esl_index in esl:   
     orginial_file_name = 'FileTest/ESL' + ' ' + str(esl_index) + ' ' + 'WELE'

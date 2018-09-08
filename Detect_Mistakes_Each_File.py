@@ -54,10 +54,10 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
 
         block = str(patches[cnt]).splitlines()
 
-        #print(block)
+        # print(block)
         block = sb.Standardize_Block(block)
         block = sb.Standardize_Block(block)
-        #print(block)
+        # print(block)
 
         res = []
         res = dmeb.Detect_Mistakes_Each_Block(block, lletter, rletter)
@@ -66,6 +66,11 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
         for n in range(0, leng):
             Remove.append(res[n])
             Insert.append(res[leng + n])
+
+    Correct_Words = compared_content.replace('i love you', '')
+    for word in Insert:
+        Correct_Words = Correct_Words.replace(' ' + word + ' ', ' ', 1)
+    print(Correct_Words)
 
     ##########################################################################
     # RESULT
@@ -78,13 +83,13 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
               ' || ' + '     Insert'.ljust(30) + ' ||')
         print('=' * 70)
         # create out put file
-        f= open('FileTest/result_file.csv','w+')
-        f.write('Remove' + ',' + 'Insert' +'\n')
+        f = open('FileTest/result_file.csv', 'w+')
+        f.write('Remove' + ',' + 'Insert' + '\n')
         for it in range(len(Remove)):
             print('|| ' + Remove[it].rjust(30) +
                   ' || ' + Insert[it].ljust(30) + ' ||')
-            #add new line
-            f.write(Remove[it] + ',' +Insert[it] +'\n')
+            # add new line
+            f.write(Remove[it] + ',' + Insert[it] + '\n')
         print('=' * 70)
         # finish writing file
         f.close()
