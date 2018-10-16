@@ -22,9 +22,9 @@ def Detect_Mistakes_Each_Block(lines, lletter, rletter):
             res = Detect_Pair_Mistakes(lines, pos, '+', '-', lletter)
         line_next = lines[pos + 1]
 
-        if len(res)> 1 and res[2] == 1:
+        if len(res) > 1 and res[2] == 1:
             pos += 2  # jump to the line behind the next line
-        if len(res)> 1 and res[2]==2:
+        if len(res) > 1 and res[2] == 2:
             pos += 1
         pos += 1
 
@@ -37,8 +37,10 @@ def Detect_Mistakes_Each_Block(lines, lletter, rletter):
     line_end = lines[-1]
     line_near_end = lines[-2]
     if(len(line_end.split()) == 1 and line_near_end[-1] != ' ' and line_end[1] != ' '):
-        Remove[-1] += rletter
-        Insert[-1] += rletter
+        if len(Remove) > 0:
+            Remove[-1] += rletter
+        if len(Insert) > 0:
+            Insert[-1] += rletter
 
     return Remove + Insert
 

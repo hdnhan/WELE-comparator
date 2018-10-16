@@ -3,7 +3,8 @@ import unidecode
 
 
 def Standardize_File_Docx(file_docx_name):
-    file = open(file_docx_name + '.docx', 'rb')
+    #file = open(file_docx_name + '.docx', 'rb')
+    file = open(file_docx_name, 'rb')
     content = docx.Document(file)
     standard_content = ''
 

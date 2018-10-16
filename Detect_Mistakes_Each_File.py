@@ -4,6 +4,30 @@ import diff_match_patch as dmp_module
 dmp = dmp_module.diff_match_patch()
 
 
+##########################################################################
+# RESULT
+
+#Remove = [word for pair in Remove for word in pair.split() if  word.islower()]
+#Insert = [word for pair in Insert for word in pair.split() if  word.islower()]
+def PRINT(Remove, Insert):
+    print('=' * 70)
+    print('|| ' + 'Remove     '.rjust(30) +
+          ' || ' + '     Insert'.ljust(30) + ' ||')
+    print('=' * 70)
+    # create out put file
+    #f = open('FileTest/result_file.csv', 'w+')
+    #f.write('Remove' + ',' + 'Insert' + '\n')
+    for it in range(len(Remove)):
+        print('|| ' + Remove[it].rjust(30) +
+              ' || ' + Insert[it].ljust(30) + ' ||')
+        # add new line
+        #f.write(Remove[it] + ',' + Insert[it] + '\n')
+    print('=' * 70)
+    # finish writing file
+    #f.close()
+    print()
+
+
 # pos: position
 # dire: direction
 #   -1 => left
@@ -59,6 +83,7 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
         block = sb.Standardize_Block(block)
         # print(block)
 
+        
         res = []
         res = dmeb.Detect_Mistakes_Each_Block(block, lletter, rletter)
         # sometimes, res = []
@@ -67,33 +92,9 @@ def Detect_Mistakes_Each_File(orginial_content, compared_content):
             Remove.append(res[n])
             Insert.append(res[leng + n])
 
+    
     Correct_Words = compared_content.replace('i love you', '')
     for word in Insert:
         Correct_Words = Correct_Words.replace(' ' + word + ' ', ' ', 1)
-    print(Correct_Words)
-
-    ##########################################################################
-    # RESULT
-
-    #Remove = [word for pair in Remove for word in pair.split() if  word.islower()]
-    #Insert = [word for pair in Insert for word in pair.split() if  word.islower()]
-    def PRINT():
-        print('=' * 70)
-        print('|| ' + 'Remove     '.rjust(30) +
-              ' || ' + '     Insert'.ljust(30) + ' ||')
-        print('=' * 70)
-        # create out put file
-        f = open('FileTest/result_file.csv', 'w+')
-        f.write('Remove' + ',' + 'Insert' + '\n')
-        for it in range(len(Remove)):
-            print('|| ' + Remove[it].rjust(30) +
-                  ' || ' + Insert[it].ljust(30) + ' ||')
-            # add new line
-            f.write(Remove[it] + ',' + Insert[it] + '\n')
-        print('=' * 70)
-        # finish writing file
-        f.close()
-        print()
-        print()
-    PRINT()
-    return
+    #print(Correct_Words)
+    return (Remove, Insert)
