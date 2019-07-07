@@ -1,6 +1,23 @@
 import docx
 import unidecode
+import string 
+import re
 
+def decontracted(phrase):
+    # specific
+    phrase = re.sub(r"won\'t", "will not", phrase)
+    phrase = re.sub(r"can\'t", "can not", phrase)
+
+    # general
+    phrase = re.sub(r"n\'t", " not", phrase)
+    phrase = re.sub(r"\'re", " are", phrase)
+    phrase = re.sub(r"\'s", " is", phrase)
+    phrase = re.sub(r"\'d", " would", phrase)
+    phrase = re.sub(r"\'ll", " will", phrase)
+    phrase = re.sub(r"\'t", " not", phrase)
+    phrase = re.sub(r"\'ve", " have", phrase)
+    phrase = re.sub(r"\'m", " am", phrase)
+    return phrase
 
 def Standardize_File_Docx(file_docx_name):
     #file = open(file_docx_name + '.docx', 'rb')
@@ -17,17 +34,22 @@ def Standardize_File_Docx(file_docx_name):
 
     # no_space: replace letters with no space
     # one_space: replace letter with one space
-    no_space = "' " + '‘ ’ “ ” ( ) : ! ... .. . _ " … , ? ; '
-    one_space = '- '
+
     special_word = 'uh ah oh wow'
 
-    for elem in no_space.split():
-        standard_content = standard_content.replace(elem, '')
+##    for elem in no_space.split():
+##        standard_content = standard_content.replace(elem, '')
+##
+##    one_space = one_space.split() + ['    ', '   ', '  ']
+##    for elem in one_space:
+##        standard_content = standard_content.replace(elem, ' ')
 
-    one_space = one_space.split() + ['    ', '   ', '  ']
-    for elem in one_space:
-        standard_content = standard_content.replace(elem, ' ')
+    standard_content = decontracted(standard_content)
 
+    standard_content = standard_content.translate(None,string.punctuation)
+
+
+    
     for elem in special_word.split():
         # to ensure that dont remove substring of a word
         elem = ' ' + elem + ' '
