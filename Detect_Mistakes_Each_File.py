@@ -45,12 +45,12 @@ def Get_Letters(content, pos, dire):
     return res
 
 
-def Detect_Mistakes_Each_File(orginial_content, compared_content):
+def Detect_Mistakes_Each_File(original_content, compared_content):
     # Desired results
     Remove = []  # from orginial file (WELE file, answer)
     Insert = []  # from compared file (Member's file)
 
-    patches = dmp.patch_make(orginial_content, compared_content)
+    patches = dmp.patch_make(original_content, compared_content)
 
     ###Start_Remove = []
     ###Count_Remove = []

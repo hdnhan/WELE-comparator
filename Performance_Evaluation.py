@@ -1,6 +1,7 @@
 import Standardize_File_Docx as sfd
 import Detect_Mistakes_Each_File as dmef
 import os
+import pandas as pd
 #import glob
 #import re
 
@@ -14,6 +15,7 @@ Insert = []  # from compared file (Member's file)
 #esl = [10083]
 #member_name = 'Ho Duc Nhan'
 filenames = [filename for filename in os.listdir('Single Member/')]
+#filenames = ['10094_chau.ecom@gmail.com.docx']
 esls = [filename[:5] for filename in filenames]
 
 #esl = [10065]
@@ -24,6 +26,7 @@ def categorise_mistake(Remove,Insert):
         if str(r) ==str(i)+'s' or str(i) == str(r) +'s':
             print r,i
 
+good_vocab = []
 for esl,filename in zip(esls,filenames):   
     #orginial_file_name = 'FileTest/ESL' + ' ' + str(esl_index) + ' ' + 'WELE' + '.docx'
     #compared_file_name = 'FileTest/ESL' + ' ' + str(esl_index) + ' ' + member_name + '.docx'
@@ -44,8 +47,13 @@ for esl,filename in zip(esls,filenames):
 
     print(compared_file_name)
     Remove, Insert = dmef.Detect_Mistakes_Each_File(original_content, compared_content)
-
-    dmef.PRINT(Remove, Insert)
+    Corlis = [x for x in original_content.split() if x not in Remove]
+    for word in Corlis:
+        good_vocab.append([esl,word])
+    accu = float(len(Corlis))/len(compared_content.split())
+    print accu
+#    dmef.PRINT(Remove, Insert)
 #    categorise_mistake(Remove,Insert)
     
-
+a = pd.DataFrame(good_vocab)
+b= a['word'].value_counts()
