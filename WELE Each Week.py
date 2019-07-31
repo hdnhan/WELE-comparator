@@ -4,10 +4,10 @@ from os.path import isfile, join
 import Standardize_File_Docx as sfd
 import Detect_Mistakes_Each_File as dmef
 
-
-orginial_file_name = 'ESL WELE/ESL 1072 WELE.docx'
+nesl = input('Number of ESL: ')
+orginial_file_name = '../WELEScripts/ESL ' + nesl + ' WELE.docx'
 orginial_content = sfd.Standardize_File_Docx(orginial_file_name)
-path = 'ESL WELE MEMBERS' 
+path = '../WELE Shared folder/Downloaded Member Scripts/ESL' + nesl 
 
 Remove = []
 Insert = []
@@ -21,7 +21,13 @@ def spell(word):
 for file in listdir(path):
     if isfile(join(path, file)):
         if ('(' not in file) and (')' not in file):
-            compared_content = sfd.Standardize_File_Docx(path + '/' + file)
+            #print(file)
+            try:
+                compared_content = sfd.Standardize_File_Docx(path + '/' + file)
+            except Exception as ex:
+                print('{} => {}' .format(file, ex))
+                continue
+
             rem, ins = dmef.Detect_Mistakes_Each_File(orginial_content, compared_content)
             for n in range(len(ins)):
                 if len(rem[n]) != 0 and len(ins[n]) != 0  and \
@@ -83,3 +89,15 @@ for n in stt:
     IN.append(resins[n])
 
 dmef.PRINT(RE, IN)
+
+def WRITECSV(Remove, Insert):
+    # create out put file
+    f = open('Result Each Week/'+ nesl + '.csv', 'w+')
+    f.write('Remove' + ',' + 'Insert' + '\n')
+    for it in range(len(Remove)):
+        # add new line
+        f.write(Remove[it] + ',' + Insert[it] + '\n')
+    # finish writing file
+    f.close()
+
+WRITECSV(RE, IN)
