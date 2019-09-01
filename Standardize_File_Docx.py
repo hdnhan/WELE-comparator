@@ -145,8 +145,9 @@ def expand_contractions(text, contractions_dict):
 
 
 def Standardize_File_Docx(file_docx_name):
-    file = open(file_docx_name, 'rb')
-    content = docx.Document(file)
+    # file_docx_name = open(file_docx_name, 'rb')
+    content = docx.Document(file_docx_name)
+    # file_docx_name.close()
     standard_content = ''
 
     # Convert from the whole document (many paragraphs) to only one paragraph
